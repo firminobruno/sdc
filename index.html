@@ -26,8 +26,8 @@
   --closing:#a855f7;
 
   --card:rgba(255,255,255,.75);
-  --shadow:0 24px 60px rgba(15,23,42,.10);
-  --radius:18px;
+  --shadow:0 30px 70px rgba(15,23,42,.15);
+  --radius:20px;
 }
 
 *{box-sizing:border-box;font-family:var(--font);}
@@ -41,13 +41,13 @@ body{
 .bg{
   position:fixed; inset:0; z-index:-1;
   background:
-    radial-gradient(800px 400px at 20% 20%, rgba(37,99,235,.14), transparent 60%),
-    radial-gradient(800px 400px at 80% 25%, rgba(34,197,94,.14), transparent 60%),
-    radial-gradient(800px 400px at 75% 75%, rgba(249,115,22,.14), transparent 60%),
+    radial-gradient(900px 500px at 20% 20%, rgba(37,99,235,.14), transparent 60%),
+    radial-gradient(900px 500px at 80% 25%, rgba(34,197,94,.14), transparent 60%),
+    radial-gradient(900px 500px at 70% 75%, rgba(249,115,22,.14), transparent 60%),
     #fff;
 }
 
-.wrap{max-width:1200px;margin:auto;padding:56px 24px 80px;}
+.wrap{max-width:1200px;margin:auto;padding:64px 24px 96px;}
 
 h1{
   font-size:clamp(2.6rem,4vw,4.8rem);
@@ -56,81 +56,102 @@ h1{
   margin:12px 0;
   font-weight:800;
 }
+
+h2{
+  font-size:clamp(1.6rem,2vw,2.2rem);
+  letter-spacing:-.03em;
+  margin:0 0 12px;
+  font-weight:800;
+}
+
 p{color:var(--muted);max-width:70ch;}
 
 .divider{
   height:1px;
   background:linear-gradient(90deg,transparent,var(--hair),transparent);
-  margin:48px 0;
+  margin:56px 0;
 }
 
-/* ===== AGENDA VISUAL ===== */
-.schedule{
+/* ===== EXEMPLO COM MOCK DE CELULAR ===== */
+.example{
   display:grid;
-  grid-template-columns:80px 1fr;
-  gap:18px;
-  margin-top:32px;
+  grid-template-columns:1.1fr .9fr;
+  gap:48px;
+  align-items:start;
 }
 
-.times{
-  display:grid;
-  grid-template-rows:repeat(11,60px);
-  font-size:13px;
-  color:rgba(11,18,32,.55);
+@media(max-width:900px){
+  .example{grid-template-columns:1fr;}
 }
 
-.times div{
-  display:flex;
-  align-items:flex-start;
-  justify-content:flex-end;
-  padding-top:4px;
+/* Phone mock */
+.phone{
+  width:100%;
+  max-width:340px;
+  margin:auto;
+  background:#0b1220;
+  border-radius:36px;
+  padding:14px;
+  box-shadow:0 40px 120px rgba(15,23,42,.35);
 }
 
-.blocks{
-  position:relative;
-  border:1px solid var(--hair);
-  border-radius:var(--radius);
+.screen{
   background:#f8fafc;
-  padding:8px;
+  border-radius:26px;
+  padding:14px 10px;
 }
 
-.block{
-  position:absolute;
-  left:8px;
-  right:8px;
+.time{
+  font-size:12px;
+  color:#64748b;
+  margin-bottom:8px;
+}
+
+/* Agenda blocks */
+.event{
   border-radius:14px;
-  padding:12px 14px;
+  padding:10px 12px;
+  margin-bottom:8px;
   color:#fff;
   font-weight:700;
-  box-shadow:var(--shadow);
-  font-size:14px;
+  font-size:13px;
 }
 
-.block span{
+.event span{
   display:block;
-  font-size:12px;
-  font-weight:600;
+  font-size:11px;
   opacity:.9;
   margin-top:4px;
 }
 
-/* Posicionamento (1h = 60px) */
-.b1{top:8px;height:90px;background:var(--deep);}        /* 08:30–10:00 */
-.b2{top:100px;height:20px;background:var(--recovery);} /* 10:00 */
-.b3{top:122px;height:60px;background:var(--decision);} /* 10:20–11:20 */
-.b4{top:186px;height:40px;background:var(--operational);}
+.deep{background:var(--deep);}
+.decision{background:var(--decision); color:#0b1220;}
+.secondary{background:var(--secondary); color:#0b1220;}
+.operational{background:var(--operational);}
+.recovery{background:var(--recovery);}
+.closing{background:var(--closing);}
 
-.b5{top:260px;height:90px;background:var(--deep);}     /* 13:30–15:00 */
-.b6{top:354px;height:20px;background:var(--recovery);}
-.b7{top:378px;height:60px;background:var(--secondary);color:#0b1220;}
-.b8{top:442px;height:40px;background:var(--operational);}
-.b9{top:486px;height:30px;background:var(--closing);}
-
-.legend{
-  display:flex;flex-wrap:wrap;gap:14px;margin-top:24px;font-size:13px;
+/* Cards conceituais */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  margin-top:24px;
 }
-.legend div{display:flex;align-items:center;gap:8px;}
-.legend span{width:12px;height:12px;border-radius:4px;display:inline-block;}
+
+.card{
+  background:var(--card);
+  backdrop-filter:blur(12px);
+  border-radius:var(--radius);
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+
+.card h3{
+  margin:0 0 8px;
+  font-size:1.05rem;
+  font-weight:800;
+}
 </style>
 </head>
 
@@ -143,38 +164,86 @@ p{color:var(--muted);max-width:70ch;}
 
   <div class="divider"></div>
 
-  <h2>Exemplo de um dia usando o SDC</h2>
-  <p>Visual ilustrativo de como o dia é estruturado em blocos cognitivos.</p>
+  <section class="example">
+    <div>
+      <h2>Exemplo de um dia usando o SDC</h2>
+      <p>
+        À esquerda você entende o conceito.
+        À direita você <strong>visualiza como o dia fica</strong> quando o SDC é aplicado.
+      </p>
 
-  <div class="schedule">
-    <div class="times">
-      <div>08:00</div><div>09:00</div><div>10:00</div><div>11:00</div>
-      <div>12:00</div><div>13:00</div><div>14:00</div><div>15:00</div>
-      <div>16:00</div><div>17:00</div><div>18:00</div>
+      <div class="cards">
+        <div class="card">
+          <h3>🟦 Deep Creation</h3>
+          <p>Blocos longos, protegidos, sem interrupção.</p>
+        </div>
+        <div class="card">
+          <h3>🟨 Decisão & Liderança</h3>
+          <p>Reuniões que exigem clareza e energia.</p>
+        </div>
+        <div class="card">
+          <h3>🟧 Operacional</h3>
+          <p>Execução comprimida, sem vazar para o resto do dia.</p>
+        </div>
+        <div class="card">
+          <h3>🟪 Encerramento</h3>
+          <p>Fechar o dia para começar o próximo leve.</p>
+        </div>
+      </div>
     </div>
 
-    <div class="blocks">
-      <div class="block b1">Deep Creation<span>08:30 – 10:00</span></div>
-      <div class="block b2">Recuperação<span>10:00</span></div>
-      <div class="block b3">Decisão & Liderança<span>10:20 – 11:20</span></div>
-      <div class="block b4">Operacional<span>11:20</span></div>
+    <!-- MOCK DE AGENDA NO CELULAR -->
+    <div class="phone">
+      <div class="screen">
+        <div class="time">Seg • 08:00 – 18:00</div>
 
-      <div class="block b5">Deep Creation<span>13:30 – 15:00</span></div>
-      <div class="block b6">Recuperação<span>15:00</span></div>
-      <div class="block b7">Reuniões Secundárias<span>15:20 – 16:20</span></div>
-      <div class="block b8">Operacional<span>16:20</span></div>
-      <div class="block b9">Encerramento Mental<span>17:00</span></div>
+        <div class="event deep">
+          Deep Creation
+          <span>08:30 – 10:00</span>
+        </div>
+
+        <div class="event recovery">
+          Recuperação
+          <span>10:00</span>
+        </div>
+
+        <div class="event decision">
+          Decisão & Liderança
+          <span>10:20 – 11:20</span>
+        </div>
+
+        <div class="event operational">
+          Operacional
+          <span>11:20</span>
+        </div>
+
+        <div class="event deep">
+          Deep Creation
+          <span>13:30 – 15:00</span>
+        </div>
+
+        <div class="event recovery">
+          Recuperação
+          <span>15:00</span>
+        </div>
+
+        <div class="event secondary">
+          Reuniões Secundárias
+          <span>15:20 – 16:20</span>
+        </div>
+
+        <div class="event operational">
+          Operacional
+          <span>16:20</span>
+        </div>
+
+        <div class="event closing">
+          Encerramento Mental
+          <span>17:00</span>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="legend">
-    <div><span style="background:var(--deep)"></span>Deep Creation</div>
-    <div><span style="background:var(--decision)"></span>Decisão</div>
-    <div><span style="background:var(--secondary)"></span>Reuniões</div>
-    <div><span style="background:var(--operational)"></span>Operacional</div>
-    <div><span style="background:var(--recovery)"></span>Recuperação</div>
-    <div><span style="background:var(--closing)"></span>Encerramento</div>
-  </div>
+  </section>
 </div>
 </body>
 </html>
