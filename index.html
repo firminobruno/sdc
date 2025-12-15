@@ -5,12 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SDC — Sistema de Densidade Cognitiva</title>
 
+  <!-- Google Font (ClickUp-like) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg: #0f1220;
       --card: #181c33;
       --text: #e6e8ff;
-      --muted: #9aa0ff;
+      --muted: rgba(230,232,255,.72);
 
       --deep: #3b82f6;
       --decision: #facc15;
@@ -18,65 +23,92 @@
       --recovery: #22c55e;
       --closing: #a855f7;
       --secondary: #9ca3af;
+
+      --font: "Plus Jakarta Sans", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     }
 
     * {
       box-sizing: border-box;
-      font-family: Inter, system-ui, -apple-system, sans-serif;
+      font-family: var(--font);
     }
 
     body {
       margin: 0;
+      padding: 32px;
       background: var(--bg);
       color: var(--text);
-      padding: 32px;
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: geometricPrecision;
     }
 
     h1 {
-      font-size: 2.2rem;
-      margin-bottom: 8px;
+      font-size: clamp(2.4rem, 3vw + 1.4rem, 4rem);
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+      font-weight: 800;
+      margin: 0 0 12px 0;
     }
 
     h2 {
-      margin-top: 32px;
-      font-size: 1.4rem;
-      border-left: 4px solid var(--muted);
-      padding-left: 12px;
+      margin-top: 40px;
+      font-size: clamp(1.2rem, 1vw + 1rem, 1.6rem);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      font-weight: 700;
+      border-left: 4px solid rgba(154,160,255,.55);
+      padding-left: 14px;
     }
 
     p {
-      max-width: 720px;
+      max-width: 760px;
       color: var(--muted);
+      font-size: 1.03rem;
+      margin: 8px 0 0 0;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      margin-top: 24px;
+      gap: 22px;
+      margin-top: 26px;
     }
 
     .card {
       background: var(--card);
-      border-radius: 12px;
-      padding: 20px;
+      border-radius: 18px;
+      padding: 22px;
       border-left: 6px solid;
     }
 
     .card h3 {
-      margin-top: 0;
-      margin-bottom: 8px;
-      font-size: 1.1rem;
+      margin: 0 0 12px 0;
+      font-size: 1.05rem;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      font-weight: 700;
     }
 
     ul {
       padding-left: 18px;
-      margin: 8px 0;
+      margin: 8px 0 10px 0;
     }
 
     li {
       margin-bottom: 6px;
+    }
+
+    em {
+      color: rgba(230,232,255,.6);
+      font-style: normal;
+      font-size: .95rem;
+    }
+
+    footer {
+      margin-top: 52px;
+      font-size: .9rem;
+      color: rgba(230,232,255,.55);
     }
 
     .deep { border-color: var(--deep); }
@@ -85,18 +117,12 @@
     .recovery { border-color: var(--recovery); }
     .closing { border-color: var(--closing); }
     .secondary { border-color: var(--secondary); }
-
-    footer {
-      margin-top: 48px;
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
   </style>
 </head>
 
 <body>
 
-  <h1>🧠 Sistema de Densidade Cognitiva (SDC)</h1>
+  <h1>🧠 Sistema de Densidade Cognitiva</h1>
   <p>
     Manual de referência rápida para organizar o dia por estados mentais,
     não por tarefas.
@@ -127,8 +153,7 @@
         <li>Mensagens</li>
         <li>Execução mecânica</li>
       </ul>
-      <em>Pergunta-chave:</em><br/>
-      Isso exige silêncio e profundidade?
+      <em>Pergunta-chave: isso exige silêncio e profundidade?</em>
     </div>
 
     <div class="card decision">
@@ -138,7 +163,7 @@
         <li>Reuniões críticas</li>
         <li>Alinhamentos estratégicos</li>
       </ul>
-      <em>Regra:</em> decisão clara ao final.
+      <em>Regra: decisão clara ao final.</em>
     </div>
 
     <div class="card secondary">
@@ -158,7 +183,7 @@
         <li>Aprovações</li>
         <li>Pendências rápidas</li>
       </ul>
-      <em>Regra:</em> timer ligado.
+      <em>Regra: timer ligado.</em>
     </div>
 
     <div class="card recovery">
@@ -184,9 +209,7 @@
   </div>
 
   <footer>
-    <p>
-      “Agenda é defesa cognitiva. Clareza vem antes da ação.”
-    </p>
+    “Agenda é defesa cognitiva. Clareza vem antes da ação.”
   </footer>
 
 </body>
