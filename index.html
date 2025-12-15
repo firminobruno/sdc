@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SDC — Sistema de Densidade Cognitiva</title>
+
+  <style>
+    :root {
+      --bg: #0f1220;
+      --card: #181c33;
+      --text: #e6e8ff;
+      --muted: #9aa0ff;
+
+      --deep: #3b82f6;
+      --decision: #facc15;
+      --operational: #fb923c;
+      --recovery: #22c55e;
+      --closing: #a855f7;
+      --secondary: #9ca3af;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      padding: 32px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      margin-top: 32px;
+      font-size: 1.4rem;
+      border-left: 4px solid var(--muted);
+      padding-left: 12px;
+    }
+
+    p {
+      max-width: 720px;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 20px;
+      border-left: 6px solid;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+
+    ul {
+      padding-left: 18px;
+      margin: 8px 0;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    .deep { border-color: var(--deep); }
+    .decision { border-color: var(--decision); }
+    .operational { border-color: var(--operational); }
+    .recovery { border-color: var(--recovery); }
+    .closing { border-color: var(--closing); }
+    .secondary { border-color: var(--secondary); }
+
+    footer {
+      margin-top: 48px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🧠 Sistema de Densidade Cognitiva (SDC)</h1>
+  <p>
+    Manual de referência rápida para organizar o dia por estados mentais,
+    não por tarefas.
+  </p>
+
+  <h2>Princípio</h2>
+  <p>
+    Não organize tarefas. Organize estados cognitivos.
+    Se o dia estiver confuso, volte para este sistema.
+  </p>
+
+  <h2>Modos do SDC</h2>
+
+  <div class="grid">
+
+    <div class="card deep">
+      <h3>🟦 Deep Creation</h3>
+      <strong>Serve para</strong>
+      <ul>
+        <li>Decisões estruturais</li>
+        <li>Estratégia</li>
+        <li>Arquitetura de sistemas</li>
+        <li>Criação intelectual</li>
+      </ul>
+      <strong>Nunca serve para</strong>
+      <ul>
+        <li>Reuniões</li>
+        <li>Mensagens</li>
+        <li>Execução mecânica</li>
+      </ul>
+      <em>Pergunta-chave:</em><br/>
+      Isso exige silêncio e profundidade?
+    </div>
+
+    <div class="card decision">
+      <h3>🟨 Decisão & Liderança</h3>
+      <ul>
+        <li>1:1</li>
+        <li>Reuniões críticas</li>
+        <li>Alinhamentos estratégicos</li>
+      </ul>
+      <em>Regra:</em> decisão clara ao final.
+    </div>
+
+    <div class="card secondary">
+      <h3>⚪ Reuniões Secundárias</h3>
+      <ul>
+        <li>Status</li>
+        <li>Acompanhamentos</li>
+        <li>Alinhamentos táticos</li>
+      </ul>
+      <em>Nada irreversível aqui.</em>
+    </div>
+
+    <div class="card operational">
+      <h3>🟧 Operacional Comprimido</h3>
+      <ul>
+        <li>WhatsApp</li>
+        <li>Aprovações</li>
+        <li>Pendências rápidas</li>
+      </ul>
+      <em>Regra:</em> timer ligado.
+    </div>
+
+    <div class="card recovery">
+      <h3>🟩 Recuperação Cognitiva</h3>
+      <ul>
+        <li>Caminhada</li>
+        <li>Respiração</li>
+        <li>Água</li>
+        <li>Nada de tela</li>
+      </ul>
+      <em>Sem isso, o sistema quebra.</em>
+    </div>
+
+    <div class="card closing">
+      <h3>🟪 Encerramento Mental</h3>
+      <ul>
+        <li>Fechar o dia</li>
+        <li>Definir Deep Creation de amanhã</li>
+        <li>Tirar peso da cabeça</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>
+      “Agenda é defesa cognitiva. Clareza vem antes da ação.”
+    </p>
+  </footer>
+
+</body>
+</html>
