@@ -1,447 +1,180 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SDC — Sistema de Densidade Cognitiva</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SDC — Sistema de Densidade Cognitiva</title>
 
-  <!-- Display font (bem ClickUp-like) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --font: "Plus Jakarta Sans", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+<style>
+:root{
+  --font:"Plus Jakarta Sans", Inter, system-ui, sans-serif;
 
-      /* ClickUp-ish landing palette (light) */
-      --bg: #ffffff;
-      --ink: #0b1220;
-      --muted: rgba(11,18,32,.66);
-      --hairline: rgba(11,18,32,.10);
+  --bg:#ffffff;
+  --ink:#0b1220;
+  --muted:rgba(11,18,32,.65);
+  --hair:rgba(11,18,32,.10);
 
-      /* Accent colors */
-      --deep: #2563eb;
-      --decision: #f59e0b;
-      --operational: #f97316;
-      --recovery: #22c55e;
-      --closing: #a855f7;
-      --secondary: #94a3b8;
+  --deep:#2563eb;
+  --decision:#facc15;
+  --secondary:#cbd5e1;
+  --operational:#fb923c;
+  --recovery:#22c55e;
+  --closing:#a855f7;
 
-      /* Card */
-      --card: rgba(255,255,255,.70);
-      --shadow: 0 24px 60px rgba(15, 23, 42, .10);
-      --shadow2: 0 10px 24px rgba(15, 23, 42, .08);
-      --radius: 20px;
-    }
+  --card:rgba(255,255,255,.75);
+  --shadow:0 24px 60px rgba(15,23,42,.10);
+  --radius:18px;
+}
 
-    *{ box-sizing:border-box; font-family: var(--font); }
-    html, body { height: 100%; }
+*{box-sizing:border-box;font-family:var(--font);}
+body{
+  margin:0;
+  background:#fff;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
 
-    body{
-      margin:0;
-      background: var(--bg);
-      color: var(--ink);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: geometricPrecision;
-      overflow-x: hidden;
-    }
+.bg{
+  position:fixed; inset:0; z-index:-1;
+  background:
+    radial-gradient(800px 400px at 20% 20%, rgba(37,99,235,.14), transparent 60%),
+    radial-gradient(800px 400px at 80% 25%, rgba(34,197,94,.14), transparent 60%),
+    radial-gradient(800px 400px at 75% 75%, rgba(249,115,22,.14), transparent 60%),
+    #fff;
+}
 
-    /* Background: soft “ClickUp-like” blobs */
-    .bg {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background:
-        radial-gradient(900px 520px at 18% 18%, rgba(99,102,241,.18) 0%, rgba(99,102,241,0) 60%),
-        radial-gradient(900px 520px at 78% 22%, rgba(34,197,94,.16) 0%, rgba(34,197,94,0) 62%),
-        radial-gradient(900px 520px at 72% 74%, rgba(249,115,22,.16) 0%, rgba(249,115,22,0) 60%),
-        radial-gradient(900px 520px at 22% 78%, rgba(168,85,247,.14) 0%, rgba(168,85,247,0) 60%),
-        linear-gradient(#fff, #fff);
-      filter: saturate(1.08);
-    }
+.wrap{max-width:1200px;margin:auto;padding:56px 24px 80px;}
 
-    /* Layout container */
-    .wrap{
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 56px 24px 72px;
-    }
+h1{
+  font-size:clamp(2.6rem,4vw,4.8rem);
+  letter-spacing:-.05em;
+  line-height:1.05;
+  margin:12px 0;
+  font-weight:800;
+}
+p{color:var(--muted);max-width:70ch;}
 
-    /* Header / hero */
-    .hero{
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 32px;
-      align-items: start;
-    }
+.divider{
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--hair),transparent);
+  margin:48px 0;
+}
 
-    @media (max-width: 960px){
-      .hero{ grid-template-columns: 1fr; }
-    }
+/* ===== AGENDA VISUAL ===== */
+.schedule{
+  display:grid;
+  grid-template-columns:80px 1fr;
+  gap:18px;
+  margin-top:32px;
+}
 
-    .kicker{
-      display: inline-flex;
-      gap: 10px;
-      align-items: center;
-      padding: 10px 14px;
-      border: 1px solid var(--hairline);
-      border-radius: 999px;
-      background: rgba(255,255,255,.65);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow2);
-      width: fit-content;
-      color: rgba(11,18,32,.72);
-      font-weight: 600;
-      font-size: 13px;
-      letter-spacing: .01em;
-    }
+.times{
+  display:grid;
+  grid-template-rows:repeat(11,60px);
+  font-size:13px;
+  color:rgba(11,18,32,.55);
+}
 
-    h1{
-      margin: 18px 0 10px;
-      font-size: clamp(2.5rem, 3.2vw + 1.2rem, 4.6rem);
-      line-height: 1.03;
-      letter-spacing: -0.055em;
-      font-weight: 800;
-    }
+.times div{
+  display:flex;
+  align-items:flex-start;
+  justify-content:flex-end;
+  padding-top:4px;
+}
 
-    .sub{
-      margin: 0;
-      max-width: 62ch;
-      color: var(--muted);
-      font-size: 1.08rem;
-      line-height: 1.55;
-    }
+.blocks{
+  position:relative;
+  border:1px solid var(--hair);
+  border-radius:var(--radius);
+  background:#f8fafc;
+  padding:8px;
+}
 
-    .heroCard{
-      border-radius: var(--radius);
-      border: 1px solid rgba(255,255,255,.55);
-      background: var(--card);
-      backdrop-filter: blur(16px);
-      box-shadow: var(--shadow);
-      padding: 18px;
-      position: relative;
-      overflow: hidden;
-      min-height: 170px;
-    }
+.block{
+  position:absolute;
+  left:8px;
+  right:8px;
+  border-radius:14px;
+  padding:12px 14px;
+  color:#fff;
+  font-weight:700;
+  box-shadow:var(--shadow);
+  font-size:14px;
+}
 
-    .heroCard::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background:
-        radial-gradient(600px 260px at 20% 20%, rgba(37,99,235,.22), rgba(37,99,235,0) 60%),
-        radial-gradient(600px 260px at 80% 30%, rgba(249,115,22,.18), rgba(249,115,22,0) 60%),
-        radial-gradient(600px 260px at 60% 90%, rgba(34,197,94,.18), rgba(34,197,94,0) 60%);
-      filter: blur(10px);
-      opacity: .9;
-      z-index: 0;
-    }
+.block span{
+  display:block;
+  font-size:12px;
+  font-weight:600;
+  opacity:.9;
+  margin-top:4px;
+}
 
-    .heroCard > * { position: relative; z-index: 1; }
+/* Posicionamento (1h = 60px) */
+.b1{top:8px;height:90px;background:var(--deep);}        /* 08:30–10:00 */
+.b2{top:100px;height:20px;background:var(--recovery);} /* 10:00 */
+.b3{top:122px;height:60px;background:var(--decision);} /* 10:20–11:20 */
+.b4{top:186px;height:40px;background:var(--operational);}
 
-    .heroCard h3{
-      margin: 0 0 10px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      font-size: 1.1rem;
-    }
+.b5{top:260px;height:90px;background:var(--deep);}     /* 13:30–15:00 */
+.b6{top:354px;height:20px;background:var(--recovery);}
+.b7{top:378px;height:60px;background:var(--secondary);color:#0b1220;}
+.b8{top:442px;height:40px;background:var(--operational);}
+.b9{top:486px;height:30px;background:var(--closing);}
 
-    .bullets{
-      margin: 0;
-      padding-left: 18px;
-      color: rgba(11,18,32,.74);
-      line-height: 1.6;
-    }
-
-    .divider{
-      height: 1px;
-      background: linear-gradient(90deg, rgba(11,18,32,.0), rgba(11,18,32,.14), rgba(11,18,32,.0));
-      margin: 44px 0 24px;
-    }
-
-    h2{
-      margin: 0 0 10px;
-      font-size: clamp(1.35rem, 1.1vw + 1rem, 1.9rem);
-      line-height: 1.12;
-      letter-spacing: -0.04em;
-      font-weight: 800;
-    }
-
-    .lead{
-      margin: 0 0 18px;
-      color: var(--muted);
-      max-width: 75ch;
-    }
-
-    /* Cards grid */
-    .grid{
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 18px;
-      margin-top: 16px;
-    }
-
-    @media (max-width: 1100px){
-      .grid{ grid-template-columns: repeat(6, 1fr); }
-    }
-    @media (max-width: 720px){
-      .grid{ grid-template-columns: repeat(1, 1fr); }
-    }
-
-    .card{
-      grid-column: span 3;
-      border-radius: var(--radius);
-      border: 1px solid rgba(11,18,32,.08);
-      background: rgba(255,255,255,.78);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 18px 48px rgba(15,23,42,.10);
-      padding: 18px 18px 16px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    @media (max-width: 1100px){ .card{ grid-column: span 3; } }
-    @media (max-width: 720px){ .card{ grid-column: span 6; } }
-
-    .card::after{
-      content:"";
-      position:absolute; inset:0;
-      background: radial-gradient(600px 220px at 20% 0%, rgba(255,255,255,.9), rgba(255,255,255,0) 60%);
-      pointer-events:none;
-      opacity:.8;
-    }
-
-    .stripe{
-      position:absolute;
-      left:0; top:0; bottom:0;
-      width: 6px;
-      border-radius: 20px 0 0 20px;
-      background: #000;
-      opacity: .95;
-      z-index: 2;
-    }
-
-    .cardInner{ position:relative; z-index: 3; }
-
-    .cardTitle{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      margin: 0 0 10px;
-      font-size: 1.05rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-    }
-
-    .tag{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(11,18,32,.10);
-      background: rgba(255,255,255,.75);
-      color: rgba(11,18,32,.70);
-      font-size: 12px;
-      font-weight: 700;
-      width: fit-content;
-      margin-bottom: 10px;
-    }
-
-    .sectionLabel{
-      margin: 12px 0 6px;
-      font-size: 12px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: rgba(11,18,32,.45);
-      font-weight: 800;
-    }
-
-    .list{
-      margin: 0;
-      padding-left: 18px;
-      color: rgba(11,18,32,.72);
-      line-height: 1.6;
-    }
-
-    .rule{
-      margin-top: 10px;
-      color: rgba(11,18,32,.55);
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    /* Stripe colors */
-    .deep   { background: var(--deep); }
-    .decision { background: var(--decision); }
-    .secondary { background: var(--secondary); }
-    .operational { background: var(--operational); }
-    .recovery { background: var(--recovery); }
-    .closing { background: var(--closing); }
-
-    footer{
-      margin-top: 42px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(11,18,32,.08);
-      color: rgba(11,18,32,.55);
-      font-weight: 600;
-      letter-spacing: -0.01em;
-    }
-  </style>
+.legend{
+  display:flex;flex-wrap:wrap;gap:14px;margin-top:24px;font-size:13px;
+}
+.legend div{display:flex;align-items:center;gap:8px;}
+.legend span{width:12px;height:12px;border-radius:4px;display:inline-block;}
+</style>
 </head>
 
 <body>
-  <div class="bg"></div>
+<div class="bg"></div>
 
-  <div class="wrap">
+<div class="wrap">
+  <h1>Sistema de Densidade Cognitiva</h1>
+  <p>Organize o dia por <strong>estados mentais</strong>, não por tarefas.</p>
 
-    <div class="hero">
-      <div>
-        <div class="kicker">🧠 SDC • Manual de referência rápida</div>
-        <h1>Sistema de Densidade Cognitiva</h1>
-        <p class="sub">
-          Organize o dia por <strong>estados mentais</strong>, não por tarefas.
-          Se o dia estiver confuso, volte para este sistema.
-        </p>
-        <div class="divider"></div>
-        <h2>Princípio</h2>
-        <p class="lead">
-          O SDC protege sua clareza: cria espaço para <strong>pensar antes do mundo falar com você</strong>.
-          Se a agenda estiver virando ruído, volte para os modos abaixo.
-        </p>
-      </div>
+  <div class="divider"></div>
 
-      <aside class="heroCard">
-        <h3>Regra-mãe do SDC</h3>
-        <ul class="bullets">
-          <li>Você agenda <strong>modos cognitivos</strong>, não tarefas.</li>
-          <li>Compromissos entram no bloco certo — não o contrário.</li>
-          <li>Se não cabe no bloco, <strong>não entra</strong>.</li>
-        </ul>
-      </aside>
+  <h2>Exemplo de um dia usando o SDC</h2>
+  <p>Visual ilustrativo de como o dia é estruturado em blocos cognitivos.</p>
+
+  <div class="schedule">
+    <div class="times">
+      <div>08:00</div><div>09:00</div><div>10:00</div><div>11:00</div>
+      <div>12:00</div><div>13:00</div><div>14:00</div><div>15:00</div>
+      <div>16:00</div><div>17:00</div><div>18:00</div>
     </div>
 
-    <div class="divider"></div>
+    <div class="blocks">
+      <div class="block b1">Deep Creation<span>08:30 – 10:00</span></div>
+      <div class="block b2">Recuperação<span>10:00</span></div>
+      <div class="block b3">Decisão & Liderança<span>10:20 – 11:20</span></div>
+      <div class="block b4">Operacional<span>11:20</span></div>
 
-    <h2>Modos do SDC</h2>
-    <p class="lead">Use os cards como “manual de bordo”: o que entra, o que não entra, e a regra do bloco.</p>
-
-    <div class="grid">
-
-      <section class="card">
-        <div class="stripe deep"></div>
-        <div class="cardInner">
-          <div class="cardTitle">🟦 Deep Creation</div>
-          <div class="tag">Silêncio • Estratégia • Arquitetura</div>
-
-          <div class="sectionLabel">Serve para</div>
-          <ul class="list">
-            <li>Decisões estruturais</li>
-            <li>Estratégia</li>
-            <li>Arquitetura de sistemas</li>
-            <li>Criação intelectual</li>
-          </ul>
-
-          <div class="sectionLabel">Nunca serve para</div>
-          <ul class="list">
-            <li>Reuniões</li>
-            <li>Mensagens</li>
-            <li>Execução mecânica</li>
-          </ul>
-
-          <div class="rule">Pergunta-chave: isso exige silêncio e profundidade?</div>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="stripe decision"></div>
-        <div class="cardInner">
-          <div class="cardTitle">🟨 Decisão & Liderança</div>
-          <div class="tag">Pessoas • Decisões • Alinhamento</div>
-
-          <ul class="list">
-            <li>1:1</li>
-            <li>Reuniões críticas</li>
-            <li>Alinhamentos estratégicos</li>
-          </ul>
-
-          <div class="rule">Regra: decisão clara ao final.</div>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="stripe secondary"></div>
-        <div class="cardInner">
-          <div class="cardTitle">⚪ Reuniões Secundárias</div>
-          <div class="tag">Status • Acompanhamento • Tático</div>
-
-          <ul class="list">
-            <li>Status</li>
-            <li>Acompanhamentos</li>
-            <li>Alinhamentos táticos</li>
-          </ul>
-
-          <div class="rule">Regra: nada irreversível aqui.</div>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="stripe operational"></div>
-        <div class="cardInner">
-          <div class="cardTitle">🟧 Operacional Comprimido</div>
-          <div class="tag">Timer • Responder • Aprovar</div>
-
-          <ul class="list">
-            <li>WhatsApp</li>
-            <li>Aprovações</li>
-            <li>Pendências rápidas</li>
-          </ul>
-
-          <div class="rule">Regra: timer ligado.</div>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="stripe recovery"></div>
-        <div class="cardInner">
-          <div class="cardTitle">🟩 Recuperação Cognitiva</div>
-          <div class="tag">Energia • Pausa • Sustentação</div>
-
-          <ul class="list">
-            <li>Caminhada</li>
-            <li>Respiração</li>
-            <li>Água</li>
-            <li>Nada de tela</li>
-          </ul>
-
-          <div class="rule">Regra: sem isso, o sistema quebra.</div>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="stripe closing"></div>
-        <div class="cardInner">
-          <div class="cardTitle">🟪 Encerramento Mental</div>
-          <div class="tag">Fechar • Preparar • Descarregar</div>
-
-          <ul class="list">
-            <li>Fechar o dia</li>
-            <li>Definir Deep Creation de amanhã</li>
-            <li>Tirar peso da cabeça</li>
-          </ul>
-
-          <div class="rule">Regra: sair leve para entrar forte amanhã.</div>
-        </div>
-      </section>
-
+      <div class="block b5">Deep Creation<span>13:30 – 15:00</span></div>
+      <div class="block b6">Recuperação<span>15:00</span></div>
+      <div class="block b7">Reuniões Secundárias<span>15:20 – 16:20</span></div>
+      <div class="block b8">Operacional<span>16:20</span></div>
+      <div class="block b9">Encerramento Mental<span>17:00</span></div>
     </div>
-
-    <footer>
-      “Agenda é defesa cognitiva. Clareza vem antes da ação.”
-    </footer>
-
   </div>
+
+  <div class="legend">
+    <div><span style="background:var(--deep)"></span>Deep Creation</div>
+    <div><span style="background:var(--decision)"></span>Decisão</div>
+    <div><span style="background:var(--secondary)"></span>Reuniões</div>
+    <div><span style="background:var(--operational)"></span>Operacional</div>
+    <div><span style="background:var(--recovery)"></span>Recuperação</div>
+    <div><span style="background:var(--closing)"></span>Encerramento</div>
+  </div>
+</div>
 </body>
 </html>
